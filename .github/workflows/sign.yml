@@ -4,6 +4,8 @@ on:
         description: 'device udid'
         required: true
         default: ''
+# add p12 file, profile and password to github secrets
+# base64 encode the files  
 jobs:
   sign_app_on_mac:
     runs-on: macos-latest
