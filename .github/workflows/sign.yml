@@ -19,7 +19,7 @@ jobs:
                npm install
                cp node_modules/appium-webdriveragent/WebDriverAgentRunner-Runner.app.zip .
                unzip WebDriverAgentRunner-Runner.app.zip -d Payload/
-               zip -r Payload ./Payload wda.ipa
+               zip -r wda.ipa Payload
                cp wda.ipa testdata/wda.ipa
 
       - name: create profile
