@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+jobs:
+  sign_app_on_mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: get wda
+        run: |
+               npm install
+               cp node_modules/appium-webdriveragent/WebDriverAgentRunner-Runner.app.zip testdata/wda.ipa
+
+      - name: create profile
+        run: |
+          echo $P12_FILE | base64 --decode > testdata/test1.p12
+          echo $PROFILE | base64 --decode > testdata/test1.mobileprovision
+        shell: bash
+        env:
+          P12_FILE: ${{secrets.P12}}
+          PROFILE: ${{secrets.PROFILE}}
+      - name: Run App Signer
+        run: |
+          testdata/app-signer-mac --udid=$UDID --p12password=$P12_PW --profilespath=testdata --ipa=testdata/wda.ipa --output=testdata/wda-signed.ipa
+        env:
+          P12_PW: ${{secrets.P12PASSWORD}}
+          UDID: ${{ github.event.inputs.udid }}
+      - name: delete profiles
+        if: always()
+        run: |
+          rm testdata/test1*
+      - name: upload the macos build
+        uses: actions/upload-artifact@v2
+        with:
+          name: signed-wda
+          path: testdata/wda-signed.ipa
+          retention-days: 1
