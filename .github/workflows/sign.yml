@@ -1,5 +1,9 @@
 on:
   workflow_dispatch:
+      udid:
+        description: 'device udid'
+        required: true
+        default: ''
 jobs:
   sign_app_on_mac:
     runs-on: macos-latest
