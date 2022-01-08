@@ -17,7 +17,10 @@ jobs:
       - name: get wda
         run: |
                npm install
-               cp node_modules/appium-webdriveragent/WebDriverAgentRunner-Runner.app.zip testdata/wda.ipa
+               cp node_modules/appium-webdriveragent/WebDriverAgentRunner-Runner.app.zip .
+               unzip WebDriverAgentRunner-Runner.app.zip -d Payload/
+               zip -r Payload ./Payload wda.ipa
+               cp wda.ipa testdata/wda.ipa
 
       - name: create profile
         run: |
