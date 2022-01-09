@@ -6,3 +6,6 @@ This repo can be used to sign webdriveragent for any device.
 3. add the p12 password to repo secrets and call it P12PASSWORD
 4. Run workflow manually using workflow dispatch
 5. download your signed wda
+
+I use a precompiled wda.ipa
+If you want to comile your own, visit github.com/appium/WebDriverAgent for learning how to build. 
